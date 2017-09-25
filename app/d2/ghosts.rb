@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require "open-uri"
 
 Mongo::Logger.level = Logger::FATAL
 
@@ -21,5 +22,8 @@ CSV.open('d2_ghosts_simple.csv', 'wb') do |csv|
       "https://bungie.net#{ghost['displayProperties']['icon']}",
       "https://bungie.net#{ghost['screenshot']}"
     ]
+    File.open("ghost_imgs/#{ghost['displayProperties']['name']}.jpg", 'wb') do |fo|
+      fo.write open("https://bungie.net#{ghost['screenshot']}").read
+    end
   end
 end

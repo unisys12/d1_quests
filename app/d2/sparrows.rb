@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require "open-uri"
 
 Mongo::Logger.level = Logger::FATAL
 
@@ -21,5 +22,8 @@ CSV.open('d2_sparrows_simple.csv', 'wb') do |csv|
       "https://bungie.net#{sparrow['displayProperties']['icon']}",
       "https://bungie.net#{sparrow['screenshot']}"
     ]
+    File.open("sparrow_imgs/#{sparrow['displayProperties']['name']}.jpg", 'wb') do |fo|
+      fo.write open("https://bungie.net#{sparrow['screenshot']}").read
+    end
   end
 end

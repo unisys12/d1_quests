@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require "open-uri"
 
 Mongo::Logger.level = Logger::FATAL
 
@@ -21,5 +22,8 @@ CSV.open('d2_ornaments_simple.csv', 'wb') do |csv|
       ornament['displayProperties']['description'],
       "https://bungie.net#{ornament['displayProperties']['icon']}"
     ]
+    File.open("ornament_imgs/#{ornament['displayProperties']['name']}.jpg", 'wb') do |fo|
+      fo.write open("https://bungie.net#{ornament['displayProperties']['icon']}").read
+    end
   end
 end

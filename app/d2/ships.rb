@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require "open-uri"
 
 Mongo::Logger.level = Logger::FATAL
 
@@ -21,5 +22,13 @@ CSV.open('d2_ships_simple.csv', 'wb') do |csv|
       "https://bungie.net#{ship['displayProperties']['icon']}",
       "https://bungie.net#{ship['screenshot']}"
     ]
+  end
+end
+
+@ships.each do |ship|
+  name = ship['displayProperties']['name']
+  next if ship['displayProperties']['name'].include?('/')
+  File.open("ship_imgs/#{name}.jpg", 'wb') do |fo|
+    fo.write open("https://bungie.net#{ship['screenshot']}").read
   end
 end

@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require "open-uri"
 
 Mongo::Logger.level = Logger::FATAL
 
@@ -33,6 +34,10 @@ def list_weapons(hash)
         "https://bungie.net#{weapon['displayProperties']['icon']}",
         "https://bungie.net#{weapon['screenshot']}"
       ]
+      next if weapon['displayProperties']['name'].include?('/')
+      File.open("#{category}_imgs/#{weapon['displayProperties']['name']}.jpg", 'w+') do |fo|
+        fo.write open("https://bungie.net#{weapon['screenshot']}").read
+      end
     end
   end
 end
