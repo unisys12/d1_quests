@@ -1,15 +1,14 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'mongo'
 require 'csv'
 require 'dotenv/load'
-require "open-uri"
+# require 'open-uri'
+require_relative '../db/connect'
 
-Mongo::Logger.level = Logger::FATAL
+client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+db = client.conn
 
-client = Mongo::Client.new([ENV['DB_URL']], database: ENV['DB_USER'], user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
-
-item_defs = client['destiny2.en.DestinyInventoryItemDefinition']
+item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 
 @ghosts = item_defs.find(itemCategoryHashes: 39)
 
@@ -22,8 +21,8 @@ CSV.open('d2_ghosts_simple.csv', 'wb') do |csv|
       "https://bungie.net#{ghost['displayProperties']['icon']}",
       "https://bungie.net#{ghost['screenshot']}"
     ]
-    File.open("ghost_imgs/#{ghost['displayProperties']['name']}.jpg", 'wb') do |fo|
-      fo.write open("https://bungie.net#{ghost['screenshot']}").read
-    end
+    # File.open("ghost_imgs/#{ghost['displayProperties']['name']}.jpg", 'wb') do |fo|
+    #   fo.write open("https://bungie.net#{ghost['screenshot']}").read
+    # end
   end
 end

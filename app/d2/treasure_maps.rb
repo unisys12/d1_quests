@@ -1,14 +1,13 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'mongo'
 require 'csv'
 require 'dotenv/load'
+require_relative '../db/connect'
 
-Mongo::Logger.level = Logger::FATAL
+client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+db = client.conn
 
-client = Mongo::Client.new([ENV['DB_URL']], database: ENV['DB_USER'], user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
-
-map_defs = client['destiny2.en.DestinyObjectiveDefinition']
+map_defs = db['destiny2.en.DestinyObjectiveDefinition']
 
 @maps = map_defs.find("displayProperties.name": /Treasure Map/)
 
