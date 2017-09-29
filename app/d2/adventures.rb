@@ -8,8 +8,8 @@ Mongo::Logger.level = Logger::FATAL
 
 client = Mongo::Client.new([ENV['DB_URL']], database: ENV['DB_USER'], user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
-activity_defs = client['destiny2.manifest.en.DestinyActivityDefinition']
-@place_defs = client['destiny2.manifest.en.DestinyPlaceDefinition']
+activity_defs = client['destiny2.en.DestinyActivityDefinition']
+@place_defs = client['destiny2.en.DestinyPlaceDefinition']
 
 @adventures = activity_defs.find(activityTypeHash: 3497767639.0, tier: 0)
 

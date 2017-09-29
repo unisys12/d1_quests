@@ -9,7 +9,7 @@ Mongo::Logger.level = Logger::FATAL
 
 client = Mongo::Client.new([ENV['DB_URL']], database: ENV['DB_USER'], user: ENV['DB_USER'], password: ENV['DB_PASSWORD'])
 
-item_defs = client['destiny2.manifest.en.DestinyInventoryItemDefinition']
+item_defs = client['destiny2.en.DestinyInventoryItemDefinition']
 
 @ships = item_defs.find(itemCategoryHashes: 42)
 
