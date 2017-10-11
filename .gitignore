@@ -1,4 +1,4 @@
 .env
 *.csv
 *.log
-*_imgs
+data
