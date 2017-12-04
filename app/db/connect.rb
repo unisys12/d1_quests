@@ -10,6 +10,7 @@ class DB
   end
 
   def conn
+    Mongo::Logger.level = Logger::FATAL
     Mongo::Client.new(
       @url, database: @db, user: @user, password: @password
     )
