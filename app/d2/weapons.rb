@@ -41,14 +41,14 @@ def list_weapons(hash)
   end
 end
 
-# puts '--- Power Weapons ---'
-# list_weapons(4)
+puts '--- Power Weapons ---'
+list_weapons(4)
 
-# puts '--- Energy Weapons ---'
-# list_weapons(3)
+puts '--- Energy Weapons ---'
+list_weapons(3)
 
-# puts '--- Kinetic Weapons ---'
-# list_weapons(2)
+puts '--- Kinetic Weapons ---'
+list_weapons(2)
 
 # ALL WEAPONS
 CSV.open('d2_weapons_simple.csv', 'wb') do |csv|
