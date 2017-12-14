@@ -35,7 +35,7 @@ def fetch_item(hash)
 end
 
 armor_sets.each do |set|
-  CSV.open("data/#{set['displayProperties']['name']}.csv", 'a+') do |csv|
+  CSV.open("data/12_12_update/#{set['displayProperties']['name']}.csv", 'a+') do |csv|
     csv << %w[name description screenshot type_1 type_2 type_3]
     set['gearset']['itemList'].each do |item|
       csv << fetch_item(item)

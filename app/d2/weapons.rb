@@ -2,7 +2,6 @@ require 'rubygems'
 require 'bundler/setup'
 require 'csv'
 require 'dotenv/load'
-# require "open-uri"
 require_relative '../db/connect'
 
 client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
@@ -22,7 +21,7 @@ end
 
 def list_weapons(hash)
   category = resolve_category(hash)
-  CSV.open("d2_#{category}_simple.csv", 'wb') do |csv|
+  CSV.open("d2_#{category}_simple_12_12.csv", 'wb') do |csv|
     csv << %w[name flavor_text weapon_type image_url screenshot_url]
     @weapons.each do |weapon|
       next unless weapon['itemCategoryHashes'][0] == hash
@@ -51,7 +50,7 @@ puts '--- Kinetic Weapons ---'
 list_weapons(2)
 
 # ALL WEAPONS
-CSV.open('d2_weapons_simple.csv', 'wb') do |csv|
+CSV.open('d2_weapons_simple_12_12.csv', 'wb') do |csv|
   csv << %w[name flavor_text weapon_type image_url screenshot_url]
   @weapons.each do |weapon|
     csv << [

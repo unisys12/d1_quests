@@ -12,7 +12,7 @@ item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 
 @shaders = item_defs.find(itemCategoryHashes: 41)
 
-CSV.open('d2_shaders_simple.csv', 'wb') do |csv|
+CSV.open('d2_shaders_simple_12_12.csv', 'wb') do |csv|
   csv << %w[name flavor_text image_url]
   @shaders.each do |shader|
     csv << [

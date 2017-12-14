@@ -12,7 +12,7 @@ item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 
 @ghosts = item_defs.find(itemCategoryHashes: 39)
 
-CSV.open('d2_ghosts_simple.csv', 'wb') do |csv|
+CSV.open('d2_ghosts_simple_12_12.csv', 'wb') do |csv|
   csv << %w[name flavor_text image_url screenshot_url]
   @ghosts.each do |ghost|
     csv << [
