@@ -11,6 +11,8 @@ activity_defs = db['destiny2.en.DestinyActivityDefinition']
 @place_defs = db['destiny2.en.DestinyPlaceDefinition']
 
 @adventures = activity_defs.find(activityTypeHash: 3497767639.0, tier: 0)
+@stories = activity_defs.find( activityTypeHash: 1686739444 )
+@strikes = activity_defs.find(activityTypeHash: 4110605575.0 || 2889152536.0 || 4164571395.0)
 
 def resolve_place(hash)
   instance = @place_defs.find(_id: hash)
@@ -19,10 +21,29 @@ def resolve_place(hash)
   end
 end
 
+@list = []
+
 def list_adventures(hash)
+  puts '--Adventures--'
   @adventures.each do |adventure|
     next unless adventure['placeHash'] == hash
-    puts adventure['displayProperties']['name']
+    @list << adventure['displayProperties']['name']
+    puts @list.uniq
+    @list = []
+  end
+  puts '--Story Missions--'
+  @stories.each do |mission|
+    next unless mission['placeHash'] == hash
+    @list << mission['displayProperties']['name']
+    puts @list.uniq
+    @list = []
+  end
+  puts '--Strikes--'
+  @strikes.each do |strike|
+    next unless strike['placeHash'] == hash
+    @list << strike['displayProperties']['name']
+    puts @list.uniq
+    @list = []
   end
   puts ''
 end
