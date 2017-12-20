@@ -12,15 +12,18 @@ item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 
 @ships = item_defs.find(itemCategoryHashes: 42)
 
-CSV.open('d2_ships_simple_12_12.csv', 'wb') do |csv|
-  csv << %w[name flavor_text image_url screenshot_url]
-  @ships.each do |ship|
-    csv << [
-      ship['displayProperties']['name'],
-      ship['displayProperties']['description'],
-      "https://bungie.net#{ship['displayProperties']['icon']}",
-      "https://bungie.net#{ship['screenshot']}"
-    ]
+def update_ships
+  CSV.open("d2_ships_simple_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name flavor_text image_url screenshot_url]
+    puts 'Fetching Ship data...'
+    @ships.each do |ship|
+      csv << [
+        ship['displayProperties']['name'],
+        ship['displayProperties']['description'],
+        "https://bungie.net#{ship['displayProperties']['icon']}",
+        "https://bungie.net#{ship['screenshot']}"
+      ]
+    end
   end
 end
 

@@ -11,12 +11,15 @@ map_defs = db['destiny2.en.DestinyObjectiveDefinition']
 
 @maps = map_defs.find("displayProperties.name": /Treasure Map/)
 
-CSV.open('d2_caydes_treasure_maps.csv', 'wb') do |csv|
-  csv << %w[name description]
-  @maps.each do |map|
-    csv << [
-      map['displayProperties']['name'],
-      map['displayProperties']['description']
-    ]
+def update_treasure_maps
+  CSV.open("d2_caydes_treasure_maps_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name description]
+    puts 'Fetching Treasure Maps...'
+    @maps.each do |map|
+      csv << [
+        map['displayProperties']['name'],
+        map['displayProperties']['description']
+      ]
+    end
   end
 end

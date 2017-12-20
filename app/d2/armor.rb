@@ -19,9 +19,9 @@ def resolve_class(hash)
   end
 end
 
-def list_armor(hash)
+def update_armor(hash)
   character_class = resolve_class(hash)
-  CSV.open("d2_#{character_class}_armor_simple_12_12.csv", 'wb') do |csv|
+  CSV.open("d2_#{character_class}_armor_simple_#{Date.today}.csv", 'wb') do |csv|
     csv << %w[name description type image_url screenshot_url]
     @armors.each do |armor|
       next unless armor['itemCategoryHashes'][0] == hash
@@ -36,11 +36,34 @@ def list_armor(hash)
   end
 end
 
-puts '--- Warlock ---'
-list_armor(21)
+def compare(klass)
+  old = CSV.table("d2_#{klass}_armor_simple_12_12.csv")
+  update = CSV.table("d2_#{klass}_armor_simple_#{Date.today}.csv")
 
-puts '--- Titan ---'
-list_armor(22)
+  if update == old
+    puts 'No new items found...'
+    exit
+  else
+    puts 'new items listed...'
+    new_hash = update.to_a - old.to_a
+    puts "#{new_hash.count} new #{klass} Armor in the this update..."
+    new_hash.flatten
+  end
 
-puts '--- Hunter ---'
-list_armor(23)
+  CSV.open("d2_new_#{klass}_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name description type image_url screenshot_url]
+    new_hash.each do |item|
+      csv << [
+        item[0],
+        item[1],
+        item[2],
+        item[3],
+        item[4]
+      ]
+    end
+  end
+end
+
+compare("Hunter")
+compare("Titan")
+compare("Warlock")

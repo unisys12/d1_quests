@@ -19,9 +19,9 @@ def resolve_category(hash)
   end
 end
 
-def list_weapons(hash)
+def update_weapon_groups(hash)
   category = resolve_category(hash)
-  CSV.open("d2_#{category}_simple_12_12.csv", 'wb') do |csv|
+  CSV.open("d2_#{category}_simple_#{Date.today}.csv", 'wb') do |csv|
     csv << %w[name flavor_text weapon_type image_url screenshot_url]
     @weapons.each do |weapon|
       next unless weapon['itemCategoryHashes'][0] == hash
@@ -40,25 +40,50 @@ def list_weapons(hash)
   end
 end
 
-puts '--- Power Weapons ---'
-list_weapons(4)
-
-puts '--- Energy Weapons ---'
-list_weapons(3)
-
-puts '--- Kinetic Weapons ---'
-list_weapons(2)
 
 # ALL WEAPONS
-CSV.open('d2_weapons_simple_12_12.csv', 'wb') do |csv|
-  csv << %w[name flavor_text weapon_type image_url screenshot_url]
-  @weapons.each do |weapon|
-    csv << [
-      weapon['displayProperties']['name'],
-      weapon['displayProperties']['description'],
-      weapon['itemTypeDisplayName'],
-      "https://bungie.net#{weapon['displayProperties']['icon']}",
-      "https://bungie.net#{weapon['screenshot']}"
-    ]
+def update_all_weapons
+  CSV.open("d2_weapons_simple_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name flavor_text weapon_type image_url screenshot_url]
+    puts 'Updating all weapons...'
+    @weapons.each do |weapon|
+      csv << [
+        weapon['displayProperties']['name'],
+        weapon['displayProperties']['description'],
+        weapon['itemTypeDisplayName'],
+        "https://bungie.net#{weapon['displayProperties']['icon']}",
+        "https://bungie.net#{weapon['screenshot']}"
+      ]
+    end
   end
 end
+
+def compare
+  old = CSV.table('d2_weapons_simple_12_12.csv')
+  update = CSV.table("d2_weapons_simple_#{Date.today}.csv")
+
+  if update == old
+    puts 'No new items found...'
+    exit
+  else
+    puts 'new items listed...'
+    new_hash = update.to_a - old.to_a
+    puts "#{new_hash.count} new weapons in the this update..."
+    new_hash.flatten
+  end
+
+  CSV.open("d2_new_weapons_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name description type image_url screenshot_url]
+    new_hash.each do |weapon|
+      csv << [
+        weapon[0],
+        weapon[1],
+        weapon[2],
+        weapon[3],
+        weapon[4]
+      ]
+    end
+  end
+end
+
+compare
