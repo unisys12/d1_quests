@@ -29,3 +29,32 @@ def update_sparrows
     end
   end
 end
+
+def compare
+  old = CSV.table('d2_shaders_simple_12_12.csv')
+  update = CSV.table("d2_shaders_simple_#{Date.today}.csv")
+ 
+  if update == old
+    puts 'No new items found...'
+    exit
+  else
+    puts 'new items listed...'
+    new_hash = update.to_a - old.to_a
+    puts "#{new_hash.count} new Ships in the this update..."
+    new_hash.flatten
+  end
+ 
+  CSV.open("d2_new_Shaders_simple_#{Date.today}.csv", 'wb') do |csv|
+    csv << %w[name flavor_text image_url screenshot_url]
+    new_hash.each do |items|
+      csv << [
+        items[0],
+        items[1],
+        items[2],
+        items[3]
+      ]
+    end
+  end
+end
+
+compare
