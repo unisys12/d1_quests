@@ -6,10 +6,8 @@ require_relative '../db/connect'
 
 client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
 db = client.conn
-
 item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 @category_defs = db['destiny2.en.DestinyItemCategoryDefinition']
-
 @weapons = item_defs.find(itemCategoryHashes: 1)
 
 def resolve_category(hash)
@@ -32,14 +30,9 @@ def update_weapon_groups(hash)
         "https://bungie.net#{weapon['displayProperties']['icon']}",
         "https://bungie.net#{weapon['screenshot']}"
       ]
-      # next if weapon['displayProperties']['name'].include?('/')
-      # File.open("#{category}_imgs/#{weapon['displayProperties']['name']}.jpg", 'w+') do |fo|
-      #   fo.write open("https://bungie.net#{weapon['screenshot']}").read
-      # end
     end
   end
 end
-
 
 # ALL WEAPONS
 def update_all_weapons
@@ -58,32 +51,37 @@ def update_all_weapons
   end
 end
 
-def compare
-  old = CSV.table('d2_weapons_simple_12_12.csv')
-  update = CSV.table("d2_weapons_simple_#{Date.today}.csv")
-
-  if update == old
-    puts 'No new items found...'
-    exit
-  else
-    puts 'new items listed...'
-    new_hash = update.to_a - old.to_a
-    puts "#{new_hash.count} new weapons in the this update..."
-    new_hash.flatten
-  end
-
+def new_weapons(data)
+  puts 'Writing new file...'
   CSV.open("d2_new_weapons_#{Date.today}.csv", 'wb') do |csv|
-    csv << %w[name description type image_url screenshot_url]
-    new_hash.each do |weapon|
+    csv << %w[name flavor_text weapon_type image_url screenshot_url]
+    data.each do |row|
       csv << [
-        weapon[0],
-        weapon[1],
-        weapon[2],
-        weapon[3],
-        weapon[4]
+        row['name'],
+        row['flavor_text'],
+        row['weapon_type'],
+        row['image_url'],
+        row['screenshot_url']
       ]
     end
   end
+  puts 'Done!'
 end
 
-compare
+def compare_weapons
+  weapons = []
+  puts 'Comparing Weapons...'
+  old_file = CSV.read('d2_weapons_simple_2017-12-19.csv', headers: true)
+  new_file = CSV.read("d2_weapons_simple_2018-01-16.csv", headers: true)
+
+  old = old_file
+  update = new_file
+
+  update.each do |weapon|
+   weapons.push(weapon) unless update.include?(old)
+  end
+  puts "  Found #{weapons.length} new weapons..."
+  new_weapons(weapons)
+end
+
+compare_weapons

@@ -20,8 +20,16 @@ update_armor(22)
 puts '--- Hunter Armor ---'
 update_armor(23)
 
+compare_armor("Hunter")
+compare_armor("Titan")
+compare_armor("Warlock")
+
 update_emblems
+compare_emblems
+
 update_ghosts
+compare_ghosts
+
 update_ornaments
 update_shaders
 update_ships
@@ -38,3 +46,4 @@ puts '--- Kinetic Weapons ---'
 update_weapon_groups(2)
 
 update_all_weapons
+compare_weapons

@@ -40,32 +40,32 @@ def update_emblems
   end
 end
 
-def compare
-  old = CSV.table('d2_emblems_simple_12_12.csv')
+def compare_emblems
+  puts 'Comparing Emblems...'
+  old = CSV.table('d2_emblems_simple_2017-12-19.csv')
   update = CSV.table("d2_emblems_simple_#{Date.today}.csv")
 
   if update == old
-    puts 'No new items found...'
-    exit
+    puts '    No new items found...'
   else
-    puts 'new items listed...'
+    puts '    new items listed...'
     new_hash = update.to_a - old.to_a
-    puts "#{new_hash.count} new emblems in the this update..."
+    puts "    #{new_hash.count} new emblems in the this update..."
     new_hash.flatten
-  end
 
-  CSV.open("d2_new_emblems_#{Date.today}.csv", 'wb') do |csv|
-    csv << %w[name icon_url secondary_icon secondary_overlay secondary_specical]
-    new_hash.each do |item|
-      csv << [
-        item[0],
-        item[1],
-        item[2],
-        item[3],
-        item[4]
-      ]
+    CSV.open("d2_new_emblems_#{Date.today}.csv", 'wb') do |csv|
+      csv << %w[name icon_url secondary_icon secondary_overlay secondary_specical]
+      new_hash.each do |item|
+        csv << [
+          item[0],
+          item[1],
+          item[2],
+          item[3],
+          item[4]
+        ]
+      end
     end
   end
 end
 
-compare
+# compare

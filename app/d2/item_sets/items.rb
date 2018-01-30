@@ -37,7 +37,7 @@ end
 def update_item_sets
   puts 'Fetching Weapon and Armor set data...'
   @armor_sets.each do |set|
-    CSV.open("data/#{Date.today}_update/#{set['displayProperties']['name']}.csv", 'a+') do |csv|
+    CSV.open("data/#{Date.today}_update/#{set['displayProperties']['name']}.csv", 'wb') do |csv|
       csv << %w[name description screenshot type_1 type_2 type_3]
       set['gearset']['itemList'].each do |item|
         csv << fetch_item(item)

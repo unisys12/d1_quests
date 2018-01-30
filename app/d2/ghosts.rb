@@ -30,31 +30,31 @@ def update_ghosts
   end
 end
 
-def compare
-  old = CSV.table('d2_ghosts_simple_12_12.csv')
+def compare_ghosts
+  puts 'Comparing Ghosts...'
+  old = CSV.table('d2_ghosts_simple_2017-12-19.csv')
   update = CSV.table("d2_ghosts_simple_#{Date.today}.csv")
  
   if update == old
-    puts 'No new items found...'
-    exit
+    puts '    No new items found...'
   else
-    puts 'new items listed...'
+    puts '    new items listed...'
     new_hash = update.to_a - old.to_a
-    puts "#{new_hash.count} new Ghosts in the this update..."
+    puts "    #{new_hash.count} new Ghosts in the this update..."
     new_hash.flatten
-  end
- 
-  CSV.open("d2_new_Ghosts_simple_#{Date.today}.csv", 'wb') do |csv|
-    csv << %w[name flavor_text image_url screenshot_url]
-    new_hash.each do |items|
-      csv << [
-        items[0],
-        items[1],
-        items[2],
-        items[3]
-      ]
+
+    CSV.open("d2_new_Ghosts_#{Date.today}.csv", 'wb') do |csv|
+      csv << %w[name flavor_text image_url screenshot_url]
+      new_hash.each do |items|
+        csv << [
+          items[0],
+          items[1],
+          items[2],
+          items[3]
+        ]
+      end
     end
   end
 end
 
-compare
+# compare
