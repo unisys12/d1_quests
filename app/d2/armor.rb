@@ -4,7 +4,7 @@ require 'csv'
 require 'dotenv/load'
 require_relative '../db/connect'
 
-client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 
 item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
@@ -38,7 +38,7 @@ end
 
 def compare_armor(klass)
   puts "Comparing #{klass} Armor..."
-  old = CSV.table("d2_#{klass}_armor_simple_2017-12-19.csv")
+  old = CSV.table("d2_#{klass}_armor_simple_2018-01-16.csv")
   update = CSV.table("d2_#{klass}_armor_simple_#{Date.today}.csv")
 
   if update == old

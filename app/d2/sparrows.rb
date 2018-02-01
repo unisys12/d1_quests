@@ -5,7 +5,7 @@ require 'dotenv/load'
 require 'open-uri'
 require_relative '../db/connect'
 
-client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 
 item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
@@ -31,8 +31,8 @@ def update_sparrows
 end
 
 def compare
-  old = CSV.table('d2_shaders_simple_12_12.csv')
-  update = CSV.table("d2_shaders_simple_#{Date.today}.csv")
+  old = CSV.table('d2_sparrows_simple_2018-01-16.csv')
+  update = CSV.table("d2_sparrows_simple_#{Date.today}.csv")
  
   if update == old
     puts 'No new items found...'
@@ -57,4 +57,4 @@ def compare
   end
 end
 
-compare
+# compare

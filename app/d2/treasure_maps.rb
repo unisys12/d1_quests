@@ -4,7 +4,7 @@ require 'csv'
 require 'dotenv/load'
 require_relative '../db/connect'
 
-client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 
 map_defs = db['destiny2.en.DestinyObjectiveDefinition']

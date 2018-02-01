@@ -4,7 +4,7 @@ require 'csv'
 require 'dotenv/load'
 require_relative '../db/connect'
 
-client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
 @category_defs = db['destiny2.en.DestinyItemCategoryDefinition']
@@ -71,8 +71,8 @@ end
 def compare_weapons
   weapons = []
   puts 'Comparing Weapons...'
-  old_file = CSV.read('d2_weapons_simple_2017-12-19.csv', headers: true)
-  new_file = CSV.read("d2_weapons_simple_2018-01-16.csv", headers: true)
+  old_file = CSV.read('d2_weapons_simple_2018-01-16.csv', headers: true)
+  new_file = CSV.read("d2_weapons_simple_#{Date.today}.csv", headers: true)
 
   old = old_file
   update = new_file
@@ -84,4 +84,4 @@ def compare_weapons
   new_weapons(weapons)
 end
 
-compare_weapons
+# compare_weapons

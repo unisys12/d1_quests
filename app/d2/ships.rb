@@ -5,7 +5,7 @@ require 'dotenv/load'
 require 'open-uri'
 require_relative '../db/connect'
 
-client = DB.new(ENV['DB_URL'], ENV['DB_USER'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 
 item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
@@ -28,7 +28,8 @@ def update_ships
 end
 
 def compare
-  old = CSV.table('d2_ships_simple_12_12.csv')
+  update_ships
+  old = CSV.table('d2_ships_simple_2018-01-16.csv')
   update = CSV.table("d2_ships_simple_#{Date.today}.csv")
  
   if update == old
@@ -41,7 +42,7 @@ def compare
     new_hash.flatten
   end
  
-  CSV.open("d2_new_Ghosts_simple_#{Date.today}.csv", 'wb') do |csv|
+  CSV.open("d2_new_Ships_simple_#{Date.today}.csv", 'wb') do |csv|
     csv << %w[name flavor_text image_url screenshot_url]
     new_hash.each do |items|
       csv << [
