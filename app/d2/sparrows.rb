@@ -30,31 +30,35 @@ def update_sparrows
   end
 end
 
-def compare
-  old = CSV.table('d2_sparrows_simple_2018-01-16.csv')
-  update = CSV.table("d2_sparrows_simple_#{Date.today}.csv")
- 
-  if update == old
-    puts 'No new items found...'
-    exit
-  else
-    puts 'new items listed...'
-    new_hash = update.to_a - old.to_a
-    puts "#{new_hash.count} new Ships in the this update..."
-    new_hash.flatten
-  end
- 
-  CSV.open("d2_new_Shaders_simple_#{Date.today}.csv", 'wb') do |csv|
-    csv << %w[name flavor_text image_url screenshot_url]
-    new_hash.each do |items|
-      csv << [
-        items[0],
-        items[1],
-        items[2],
-        items[3]
-      ]
-    end
-  end
-end
+# def write_new(updates)
+#   puts "Writing file containing #{updates.count} new Sparrows from this update..."
+#   CSV.open("d2_new_Sparrows_#{Date.today}.csv", 'wb') do |csv|
+#     csv << %w[name flavor_text image_url screenshot_url]
+#     updates.each do |update|
+#       csv << update
+#     end
+#   end
+# end
 
-# compare
+# def compare_sparrows
+#   arr_updates = []
+#   puts 'Comparing Sparrows...'
+#   old = File.open('d2_sparrows_simple_2018-01-16.csv')
+#   update = File.open("d2_sparrows_simple_#{Date.today}.csv")
+
+#   arr_a = []
+
+#   old_lines = old.readlines
+#   update_lines = update.readlines
+
+#   old_lines.each do |e|
+#     arr_a.push(e)
+#   end
+
+#   update_lines.each do |f|
+#     # puts f unless arr_a.include?(f)
+#     arr_updates.push(f.parse_csv) unless arr_a.include?(f)
+#   end
+#   write_new(arr_updates) if arr_updates.count > 0
+#   puts 'No new Sparrows found in this update...' if arr_updates.count.zero?
+# end

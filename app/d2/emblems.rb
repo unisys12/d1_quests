@@ -40,32 +40,27 @@ def update_emblems
   end
 end
 
-def compare_emblems
-  puts 'Comparing Emblems...'
-  old = CSV.table('d2_emblems_simple_2018-01-16.csv')
-  update = CSV.table("d2_emblems_simple_#{Date.today}.csv")
+# def compare_emblems
+#   arr_updates = []
+#   puts 'Comparing Emblems...'
+#   old = File.open('d2_emblems_simple_2018-01-16.csv')
+#   update = File.open('d2_emblems_simple_2018-01-31.csv')
 
-  if update == old
-    puts '    No new items found...'
-  else
-    puts '    new items listed...'
-    new_hash = update.to_a - old.to_a
-    puts "    #{new_hash.count} new emblems in the this update..."
-    new_hash.flatten
+#   arr_a = []
 
-    CSV.open("d2_new_emblems_#{Date.today}.csv", 'wb') do |csv|
-      csv << %w[name icon_url secondary_icon secondary_overlay secondary_specical]
-      new_hash.each do |item|
-        csv << [
-          item[0],
-          item[1],
-          item[2],
-          item[3],
-          item[4]
-        ]
-      end
-    end
-  end
-end
+#   old_lines = old.readlines
+#   update_lines = update.readlines
 
-# compare
+#   old_lines.each do |e|
+#     arr_a.push(e)
+#   end
+
+#   update_lines.each do |f|
+#     # puts f unless arr_a.include?(f)
+#     arr_updates.push(f.parse_csv) unless arr_a.include?(f)
+#   end
+#   write_new(arr_updates, 'Emblems') if arr_updates.count > 0
+#   puts 'No new Emblems found in this update...' if arr_updates.count.zero?
+# end
+
+# compare_emblems

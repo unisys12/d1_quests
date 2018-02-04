@@ -21,7 +21,7 @@ end
 
 def update_armor(hash)
   character_class = resolve_class(hash)
-  CSV.open("d2_#{character_class}_armor_simple_#{Date.today}.csv", 'wb') do |csv|
+  CSV.open("d2_#{character_class}_simple_#{Date.today}.csv", 'wb') do |csv|
     csv << %w[name description type image_url screenshot_url]
     @armors.each do |armor|
       next unless armor['itemCategoryHashes'][0] == hash
@@ -36,33 +36,22 @@ def update_armor(hash)
   end
 end
 
-def compare_armor(klass)
-  puts "Comparing #{klass} Armor..."
-  old = CSV.table("d2_#{klass}_armor_simple_2018-01-16.csv")
-  update = CSV.table("d2_#{klass}_armor_simple_#{Date.today}.csv")
+# def compare_armor(klass)
+#   arr_updates = []
+#   puts "Comparing #{klass} Armor..."
+#   old = File.open("d2_#{klass}_armor_simple_2018-01-16.csv")
+#   update = File.open("d2_#{klass}_armor_simple_#{Date.today}.csv")
 
-  if update == old
-    puts '    No new items found...'
-  else
-    puts '    new items listed...'
-    new_hash = update.to_a - old.to_a
-    puts "    #{new_hash.count} new #{klass} Armor in the this update..."
-    new_hash.flatten
+#   old_lines = old.readlines
+#   update_lines = update.readlines
+#   arr_a = []
 
-    CSV.open("d2_new_#{klass}_#{Date.today}.csv", 'wb') do |csv|
-      csv << %w[name description type image_url screenshot_url]
-      new_hash.each do |item|
-        csv << [
-          item[0],
-          item[1],
-          item[2],
-          item[3],
-          item[4]
-        ]
-      end
-    end
-  end
-end
+#   old_lines.each do |e|
+#     arr_a.push(e.parse_csv) unless update_lines.include?(e)
+#   end
+#   Util.write_new(arr_updates, 'Armor') if arr_updates.count > 0
+#   puts 'No new Armor found in this update' if arr_updates.count.zero?
+# end
 
 # compare("Hunter")
 # compare("Titan")

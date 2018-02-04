@@ -51,37 +51,35 @@ def update_all_weapons
   end
 end
 
-def new_weapons(data)
-  puts 'Writing new file...'
-  CSV.open("d2_new_weapons_#{Date.today}.csv", 'wb') do |csv|
-    csv << %w[name flavor_text weapon_type image_url screenshot_url]
-    data.each do |row|
-      csv << [
-        row['name'],
-        row['flavor_text'],
-        row['weapon_type'],
-        row['image_url'],
-        row['screenshot_url']
-      ]
-    end
-  end
-  puts 'Done!'
-end
+# def write_new(updates)
+#   puts "Writing file containing #{updates.count} new Weapons from this update..."
+#   CSV.open("d2_new_weapons_#{Date.today}.csv", 'wb') do |csv|
+#     csv << %w[name flavor_text weapon_type image_url screenshot_url]
+#     updates.each do |update|
+#       csv << update
+#     end
+#   end
+# end
 
-def compare_weapons
-  weapons = []
-  puts 'Comparing Weapons...'
-  old_file = CSV.read('d2_weapons_simple_2018-01-16.csv', headers: true)
-  new_file = CSV.read("d2_weapons_simple_#{Date.today}.csv", headers: true)
+# def compare_weapons
+#   arr_updates = []
+#   puts 'Comparing Ghosts...'
+#   old = File.open('d2_weapons_simple_2018-01-16.csv')
+#   update = File.open("d2_weapons_simple_#{Date.today}.csv")
 
-  old = old_file
-  update = new_file
+#   arr_a = []
 
-  update.each do |weapon|
-   weapons.push(weapon) unless update.include?(old)
-  end
-  puts "  Found #{weapons.length} new weapons..."
-  new_weapons(weapons)
-end
+#   old_lines = old.readlines
+#   update_lines = update.readlines
 
-# compare_weapons
+#   old_lines.each do |e|
+#     arr_a.push(e)
+#   end
+
+#   update_lines.each do |f|
+#     # puts f unless arr_a.include?(f)
+#     arr_updates.push(f.parse_csv) unless arr_a.include?(f)
+#   end
+#   write_new(arr_updates) if arr_updates.count > 0
+#   puts 'No new Weapons found in this update...' if arr_updates.count.zero?
+# end
