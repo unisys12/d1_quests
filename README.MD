@@ -1,10 +1,10 @@
 Destiny Item Comparisons
 ========================
 
-Before I begin, _"Yes, I know the name of this repo does not reflect the intentions of the project!"_. This is a personal project, not ment for mass consumption. Plus, No ones going to look at it anyway. Then again, without access to my database.... nothing here will really work, so... yeah. _Sticks out Tongue_ Soon, I will remove this and start-over so...
+Before I begin, _"Yes, I know the name of this repo does not reflect the intentions of the project!"_. This is a personal project, not meant for mass consumption. Plus, No ones going to look at it anyway. Then again, without access to my database.... nothing here will really work, so... yeah. _Sticks out Tongue_ Soon, I will remove this and start-over so...
 
 ## Purpose
-The purpose of this project was, first and foremost, teach myself Ruby. Secondly, it was to devise a very highly way to determine what had changed with items between update to the Destiny the Game API.
+The purpose of this project was, first and foremost, teach myself Ruby. Secondly, it was to devise a very high level way to determine what had changed with items between update to the Destiny the Game API.
 
 ## How it Works
 Within the `./update_data.rb` file, you call what you want to update and what to compare. The way the file currently stands, it updates and compares against almost all item types _(weapons, armor, emblems, shaders, etc..)_.
