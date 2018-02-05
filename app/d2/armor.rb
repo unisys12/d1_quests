@@ -35,24 +35,3 @@ def update_armor(hash)
     end
   end
 end
-
-# def compare_armor(klass)
-#   arr_updates = []
-#   puts "Comparing #{klass} Armor..."
-#   old = File.open("d2_#{klass}_armor_simple_2018-01-16.csv")
-#   update = File.open("d2_#{klass}_armor_simple_#{Date.today}.csv")
-
-#   old_lines = old.readlines
-#   update_lines = update.readlines
-#   arr_a = []
-
-#   old_lines.each do |e|
-#     arr_a.push(e.parse_csv) unless update_lines.include?(e)
-#   end
-#   Util.write_new(arr_updates, 'Armor') if arr_updates.count > 0
-#   puts 'No new Armor found in this update' if arr_updates.count.zero?
-# end
-
-# compare("Hunter")
-# compare("Titan")
-# compare("Warlock")

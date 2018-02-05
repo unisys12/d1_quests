@@ -39,28 +39,3 @@ def update_emblems
     end
   end
 end
-
-# def compare_emblems
-#   arr_updates = []
-#   puts 'Comparing Emblems...'
-#   old = File.open('d2_emblems_simple_2018-01-16.csv')
-#   update = File.open('d2_emblems_simple_2018-01-31.csv')
-
-#   arr_a = []
-
-#   old_lines = old.readlines
-#   update_lines = update.readlines
-
-#   old_lines.each do |e|
-#     arr_a.push(e)
-#   end
-
-#   update_lines.each do |f|
-#     # puts f unless arr_a.include?(f)
-#     arr_updates.push(f.parse_csv) unless arr_a.include?(f)
-#   end
-#   write_new(arr_updates, 'Emblems') if arr_updates.count > 0
-#   puts 'No new Emblems found in this update...' if arr_updates.count.zero?
-# end
-
-# compare_emblems
