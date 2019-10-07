@@ -1,10 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bson (4.2.2)
+    bson (4.5.0)
     dotenv (2.2.1)
-    mongo (2.4.3)
-      bson (>= 4.2.1, < 5.0.0)
+    mongo (2.10.2)
+      bson (>= 4.4.2, < 5.0.0)
 
 PLATFORMS
   ruby
@@ -12,10 +12,10 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
-  mongo (~> 2.4)
+  mongo (~> 2.10)
 
 RUBY VERSION
-   ruby 2.4.2p198
+   ruby 2.6.3p62
 
 BUNDLED WITH
-   1.15.4
+   1.17.2
