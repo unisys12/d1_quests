@@ -3,18 +3,21 @@ require 'bundler/setup'
 require 'mongo'
 require 'csv'
 require 'dotenv/load'
-require_relative '../db/connect'
+# require_relative '../db/connect'
 
-client = DB.new(ENV['DB_LOCAL'])
-db = client.conn
+client = Mongo::Client.new("mongodb://localhost:27017", :database => 'Local_Armory');
+db = client.database
 
 @activity_defs = db['destiny2.manifest.en.DestinyActivityDefinition']
 
 @strikes = @activity_defs.find(activityTypeHash: 4110605575.0 || 2889152536.0 || 4164571395.0)
+
+
 # NOT WORKING
 def strike_missions
-  @strikes.each_with_index do |strike, i|
-    puts "#{i}"
+  puts "-- Reading Strikes --"
+  @strikes.each do |strike|
+    puts strike
   end
 #   CSV.open('strike_missions.csv', 'w', headers: true) do |csv|
 #     csv << %w[hash name activity_level activity_light_level]

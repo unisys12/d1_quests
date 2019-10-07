@@ -13,15 +13,16 @@ db = client.conn
 
 @stories = @activity_defs.find(activityTypeHash: 1686739444)
 
-CSV.open("story_missions_#{Date.today}.csv", 'wb',) do |csv|
-  csv << %w[name description activity_level activity_light_level]
+# CSV.open("story_missions_#{Date.today}.csv", 'wb',) do |csv|
+#   csv << %w[name description activity_level activity_light_level]
   @stories.each do |mission|
     next unless mission['displayProperties']['name']
-    csv << [
-      mission['displayProperties']['name'],
-      mission['displayProperties']['description'],
-      mission['activityLevel'],
-      mission['activityLightLevel']
-    ]
+    puts mission['displayProperties']['name']
+    # csv << [
+    #   mission['displayProperties']['name'],
+    #   mission['displayProperties']['description'],
+    #   mission['activityLevel'],
+    #   mission['activityLightLevel']
+    # ]
   end
-end
+# end

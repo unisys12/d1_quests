@@ -7,8 +7,8 @@ require_relative '../db/connect'
 client = DB.new(ENV['DB_LOCAL'])
 db = client.conn
 
-item_defs = db['destiny2.en.DestinyInventoryItemDefinition']
-@category_defs = db['destiny2.en.DestinyItemCategoryDefinition']
+item_defs = db['DestinyInventoryItemDefinition']
+@category_defs = db['DestinyItemCategoryDefinition']
 
 @armors = item_defs.find(itemCategoryHashes: 20)
 
