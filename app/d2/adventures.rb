@@ -29,7 +29,7 @@ end
 def list_adventures(hash)
   puts ''
   puts '--Adventures--'
-  CSV.open(resolve_place(hash) + '_adventures.csv', 'wb') do |csv|
+  CSV.open('./pre_shadowkeep/' + resolve_place(hash) + '_adventures.csv', 'wb') do |csv|
     csv << %w[name discription]
     @adventures.each do |adventure|
         next unless adventure['placeHash'] == hash
@@ -42,7 +42,7 @@ def list_adventures(hash)
 
   puts ''
   puts '--Story Missions--'
-  CSV.open(resolve_place(hash) + '_stories.csv', 'wb') do |csv|
+  CSV.open('./pre_shadowkeep/' + resolve_place(hash) + '_stories.csv', 'wb') do |csv|
     csv << %w[name discription]
     @stories.each do |story|
         next unless story['placeHash'] == hash
@@ -54,7 +54,7 @@ def list_adventures(hash)
   end
   puts ''
   puts '--Strikes--'
-  CSV.open(resolve_place(hash) + '_strikes.csv', 'wb') do |csv|
+  CSV.open('./pre_shadowkeep/' + resolve_place(hash) + '_strikes.csv', 'wb') do |csv|
     csv << %w[name discription]
     @strikes.each do |strike|
         next unless strike['placeHash'] == hash
@@ -89,14 +89,3 @@ list_adventures(2426873752.0)
 
 puts "#The Moon"
 list_adventures(3325508439.0)
-
-# CSV.open('d2_adventures.csv', 'wb') do |csv|
-#   csv << %w[name discription place]
-#   adventures.each do |adventure|
-#     csv << [
-#       adventure['displayProperties']['name'],
-#       adventure['displayProperties']['description'],
-#       resolve_place(adventure['placeHash'])
-#     ]
-#   end
-# end
