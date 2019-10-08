@@ -32,7 +32,7 @@ class CompareActivities
             new_activities.push(update.parse_csv) unless old_activities.include?(update)
         end
 
-        # Write.results_csv(new_activities.uniq, file_name) if new_activities.count > 0
+        Write.results_csv(new_activities.uniq, file_name) if new_activities.count > 0
         puts "No new #{file_name.capitalize} found in this update..." if new_activities.count.zero?
     end
 
