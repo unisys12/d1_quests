@@ -14,12 +14,12 @@ class CompareActivities
         old_activities = []
         new_activities = []
 
-        puts "Comparing activities... "
-
         old_file = File.open(@old_path)
         new_file = File.open(@new_path)
 
         file_name = File.basename(@new_path, '.*')
+
+        puts "Comparing " + file_name
 
         old_rows = old_file.readlines
         new_rows = new_file.readlines
@@ -32,7 +32,7 @@ class CompareActivities
             new_activities.push(update.parse_csv) unless old_activities.include?(update)
         end
 
-        Write.results_csv(new_activities.uniq, file_name) if new_activities.count > 0
+        # Write.results_csv(new_activities.uniq, file_name) if new_activities.count > 0
         puts "No new #{file_name.capitalize} found in this update..." if new_activities.count.zero?
     end
 
